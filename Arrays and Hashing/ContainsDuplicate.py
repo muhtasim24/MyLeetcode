@@ -1,25 +1,26 @@
 '''
-Understand: If any element appears more than once, return true,
-otherwise return false 
+We are given an integer array nums
+if any value appears at least twice
+    return True 
+else return False 
 
-Match: 
-Set, Loop over array
+So we can use a set data structure
+if an element thats already in the set appears, return True immediately 
+if we can get through the loop, return False
 
-Plan: 
-Initlize a hashset 
-Iterate through the array
-If element already in hashset, return true 
-Otherwise, add to hashset
-return false if gets through loop
+Time Complexity: O(n) for going through entire array
+Space Complexity: O(n) for creating a set data structure that can be the size of the input array
+
 '''
 
+
 class Solution:
-    def containsDuplicate(nums: list[int]) -> bool:
-        hashset = set()
-        for element in nums: 
-            if element in hashset: 
+    def containsDuplicate(self, nums: List[int]) -> bool:
+        noDups = set()
+        for i in nums:
+            if i in noDups:
                 return True
-            else: 
-                hashset.add(element)
+            else:
+                noDups.add(i)
         return False
-    
+        
