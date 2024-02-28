@@ -1,46 +1,43 @@
 '''
-Given 2 strings, s and t
-Return True if t is an anagram of s
-An anagram is a word formed by rearraning letters of a different word 
-   - so that means original word, s, and rearranged word, t:
-        - Must have:
-                - Same length
-                - Same characters 
-                - the same occurence of each letter
+we are given 2 strings
+return True if t is an anagram of s, false otherwise
 
-So can start off with an initial check of the length
-to check for same occruence of each letter use a hashmap
-Create 2 hashmaps 
-    one for s 
-    one for t
+anagram = a word or phrase formed by rearranging the letters of a different word 
+so that means 
+if they are anagrams, the following is true:
+    - same length
+    - each character shows up the same number of times in both s and t
+if either of that is False, not an anagram
 
-    map letter to count of occurence 
-    Compare hashmaps, if they are the same, return True they are anagrams 
+to keep track # of times a character shows up in s and t
+we can have 2 maps
+and once the map is filled, letter -> count
+the maps should be the same
 
-Time Complexity: O(n) itearting through inputs once 
-Space Complexity: O(n) for creating 2 hashmaps of size 
 
 '''
 
 
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
+        sMap, tMap = {}, {}
         if len(s) != len(t):
             return False
-
-        sMap, tMap = {}, {}
-
-        for letter in s:
-            if letter in sMap:
-                sMap[letter] += 1
-            else:
-                sMap[letter] = 1
-        for letter in t:
-            if letter in tMap:
-                tMap[letter] += 1
-            else:
-                tMap[letter] = 1
         
-        if sMap == tMap:
-            return True
-        return False
+        for i in s: 
+            if i in sMap:
+                sMap[i] += 1
+            else:
+                sMap[i] = 1
+
+        for i in t:
+            if i in tMap:
+                tMap[i] += 1
+            else:
+                tMap[i] = 1
+
+        return tMap == sMap
+            
+        
+
+        
