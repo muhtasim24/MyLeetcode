@@ -1,25 +1,31 @@
 '''
-So we want to have a map that has the num -> index 
-we check if target - i is in the map
-return [map[target - i], and index of i]
-if not in the map 
-add it
-use the enumerate function to have the index and the value at the same time in the for loop
+we are given an array of ints, nums and a target
+return the indices of the 2 numbers that add up to the target
+only one solution
 
-runtime: O(n)
-memory: O(n)
+create a hashmap
+we are going to map the element to an index 
+since there is only 1 solution and we cant use the same element twice
+we want to solve this in one pass 
+as we are going through the input array, we are going to be checking for diff = target - element in the hashmap
+if the diff exists, return the index of current element and index of difference, which can be easily accessed through the map
+
+if it the difference doesnt exist, just add map[element] = index
+
 
 '''
-
 
 
 
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         indexMap = {}
-        
-        for index, number in enumerate(nums):
-            diff = target - number
+
+        #element to index
+        for i, n in enumerate(nums):
+            diff = target - n
             if diff in indexMap:
-                return [indexMap[diff], index]
-            indexMap[number] = index
+                return [i, indexMap[diff]]
+            indexMap[n] = i
+            
+        
