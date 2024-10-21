@@ -91,3 +91,45 @@ class Solution:
             # after we have gone through that level, increment level
             level += 1
         return level
+
+'''
+ITERATIVE DFS SOLUTION
+given the root of the tree, we are to return its max depth
+for a dfs solution, we can use a stack
+at each node, we will append the nodes children and their depth
+
+the stack will go use the node that was last pushed
+and if no new nodes were added, it will go the next one on stack 
+but if new nodes are added, the stack will go through that node
+LIFO, LAST IN FIRST OUT
+
+
+'''
+
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+
+        stack = [[root, 1]] #initilize with the root
+        res = 0
+
+        #go through every node in the stack
+        while stack:
+            node, depth = stack.pop() # we have 2 values for each node in the stack, the val and its depth
+
+            # check if our node is non NULL, not NULL
+            if node:
+                #if its not NULL, add its children
+                # see if the depth of this node, is higher than the current depth
+                res = max(res, depth)
+                stack.append([node.left, depth + 1])
+                stack.append([node.right, depth + 1])
+
+            # now if the node is NULL, we just go through it and return 
+        return res
