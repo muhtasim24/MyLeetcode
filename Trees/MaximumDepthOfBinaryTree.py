@@ -1,4 +1,5 @@
 '''
+RECURSIVE DFS SOLTUION
 we are given the root of a binary tree
 find the max depth as in find the loongest path from the root to the farthest leaf node
 we can do a recursive DFS
@@ -39,3 +40,54 @@ class Solution:
             return 0
 
         return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))
+
+
+
+'''
+ITERATIVE BFS SOLUTION
+we are given the root of a binary tree, we have to return its max depth
+so basically the max level the tree gets to
+so with that we can do an iterative BFS solution:
+if root is NULL, we return 0
+and in a BFS solution we use a queue, because we go level by level
+so at each level, we iterate through the entire queue, and then add its children as we go
+once we are done iterating through that level, we can increment the # of levels
+
+so we will be going through the queue at each level
+we will have the length of queue before we add any of children so we know to only go through the nodes
+at the current level
+
+
+
+'''
+
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        if not root:
+            return 0
+
+        q = deque([root]) #initilize with the root
+        level = 0
+
+        # while the q is not empty
+        while q:
+
+            for i in range(len(q)): #this creates a snapshot of the current q before we add in new nodes
+            # this way we only go through the nodes at the current level before going on to the next
+                node = q.popleft()
+                # make sure the children of this node are not NULL to append to the queue
+                if node.left:
+                    q.append(node.left)
+                if node.right:
+                    q.append(node.right)
+
+            # after we have gone through that level, increment level
+            level += 1
+        return level
