@@ -1,21 +1,36 @@
 '''
-We are given a binary tree
-We have to determine if its balanced
-A tree is balanced if the left and right subtrees have a difference in height of max 1
-So we could go to every node and check the subtrees and their subtrees to see if its balanced
+we are given a binary tree, we have to determine if it is a balanced binary tree
+a tree is balanced if the depth of left and subtrees (height) differ by at most 1 
+so the height of one child can only be higher than the other child by 1
+if by anymore it is not balanced
 
-But we could work our way up from the very bottom 
-use a recursive dfs 
-on our way up we tell the parent node, if that child was balanced and if the subtrees diff by max 1
-the height difference has to be less than or equal to 1
-and we will also return our way up if its balanced 
+so we can run dfs on each node and its children
+instead of asking at each node from the top and going down if the tree is balanced 
+it will be easier to start at a leaf node and work our way up
+this way we visit each node only once
 
-Base case, will be a leaf node (no children). Leaf node is balanced, and has 0 height
+Using Example 1: 
+we start at 3, run dfs on both its children 
+keep going till we reach lets say 15
+run dfs on 15, we'll be at None for both left and right children, so its balanced 
+and as we come up from NULL, we bring up the height too 
+so at 15 we can check if the differnece of height between left and right are <= 1
 
-Time: O(n)
-Memory: Height of tree
+so we need to meet 2 conditions for a subtree to be balanced:
+ - both left and right have to be balanced 
+ - difference of height between left and right <= 1
+
+so 15 is balanced, same for 7.
+so at 20
+we check if 15 is balanced and 7 is balanced = yes
+and we also check if height of 15 - height of 7 <= 1 -> yes cause both heights are 1 
+
+we will pass up [True/False, height] for each node
+
+
 
 '''
+
 
 
 # Definition for a binary tree node.
@@ -26,19 +41,21 @@ Memory: Height of tree
 #         self.right = right
 class Solution:
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
-
         def dfs(root):
-            if not root: #if leaf node
-                return [True, 0] #will be returning Balanced, and height
-
+            if not root:
+                return [True, 0] #NULL is balanced and has height of 0
+            
+            #run dfs on both children
             left = dfs(root.left)
             right = dfs(root.right)
-            #boolean that holds whether we are balanced
-            # node is balanced IF
-                # BOTH children are balanced, first index is True or False if it is balanced
-                # AND heights of children are <= 1, second index is the height
-            balanced = (left[0] and right[0]) and (abs(left[1] - right[1]) <= 1)
+
+            # check if both left and right are balanced
+            # and if their heights difference is <= 1
+            balanced = (left[0] and right[0]) and abs(left[1] - right[1]) <= 1 # both conditions will return bools
+                        # True or False , both must be true to be balanced
+
+            # in recursive function we want to pass up if balanced, and height
             return [balanced, 1 + max(left[1], right[1])]
         
-        return dfs(root)[0] #need to do [0] cause we want only the boolean when returning if the entire
-        #tree is balanced, not the height at [1]
+        return dfs(root)[0] # we just need to return the boolean, True or False if balanced
+            
